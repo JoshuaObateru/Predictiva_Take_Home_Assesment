@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/icon_button_border.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/info_border_widget.dart';
 
 import '../../../../core/presentation/widgets/custom_text_widget.dart';
@@ -45,7 +46,7 @@ class _WideTradesTableWidgetState extends State<WideTradesTableWidget> {
             Row(
               children: [
                 CustomTextWidget(
-                    text: "Open Trades", fontsize: width * 0.05, color: Theme.of(context).colorScheme.primary),
+                    text: "Open Trades", fontsize: width * 0.02, color: Theme.of(context).colorScheme.primary),
                 const Spacer(),
                 IconButton(
                     onPressed: () {},
@@ -63,64 +64,134 @@ class _WideTradesTableWidgetState extends State<WideTradesTableWidget> {
                     ))
               ],
             ),
-            DataTable(
-                headingRowHeight: 4,
-                // columnSpacing: double.maxFinite,
-                dataRowHeight: height * 0.08,
-                columns: const [
-                  //   DataColumn(label: Text('ID')),
-                  // DataColumn(label: Text('Name')),
-                  DataColumn(
-                    label: SizedBox.shrink(),
-                  ),
-                  DataColumn(
-                    label: SizedBox.shrink(),
-                  ),
-                ],
-                rows: paginatedData
-                    .map((trade) => DataRow(cells: [
-                          DataCell(Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomTextWidget(
-                                  text: trade['Symbol']!,
-                                  fontsize: width * 0.04,
-                                  color: Theme.of(context).colorScheme.primary),
-                              FittedBox(
-                                fit: BoxFit.contain,
-                                child: InfoBorderWidget(
-                                  label: trade['Action']!,
+            SizedBox(
+              width: width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: const [
+                          Expanded(child: CustomTextWidget(text: "Symbol")),
+                          Expanded(child: CustomTextWidget(text: "Price")),
+                          Expanded(child: CustomTextWidget(text: "Type")),
+                          Expanded(child: CustomTextWidget(text: "Action")),
+                          Expanded(child: CustomTextWidget(text: "Quantity")),
+                          Expanded(child: CustomTextWidget(text: "Date")),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: paginatedData
+                          .map((trade) => Padding(
+                                padding: const EdgeInsets.only(bottom: 2.0),
+                                child: Container(
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Theme.of(context).colorScheme.secondaryContainer),
+                                      borderRadius: const BorderRadius.all(Radius.circular(8))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Row(
+                                      // mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: CustomTextWidget(
+                                              text: trade['Symbol']!, color: Theme.of(context).colorScheme.primary),
+                                        ),
+                                        Expanded(
+                                          child: CustomTextWidget(
+                                              text: trade['Price']!, color: Theme.of(context).colorScheme.secondary),
+                                        ),
+                                        Expanded(
+                                          child: CustomTextWidget(
+                                              text: trade['Type']!, color: Theme.of(context).colorScheme.secondary),
+                                        ),
+                                        Expanded(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            alignment: Alignment.centerLeft,
+                                            child: InfoBorderWidget(
+                                              label: trade['Action']!,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: CustomTextWidget(
+                                              text: trade['Quantity']!, color: Theme.of(context).colorScheme.secondary),
+                                        ),
+                                        Expanded(
+                                          child: CustomTextWidget(
+                                              text: trade['Date']!, color: Theme.of(context).colorScheme.secondary),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              )
-                            ],
-                          )),
-                          DataCell(Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomTextWidget(
-                                  text: trade['Price']!,
-                                  fontsize: width * 0.04,
-                                  color: Theme.of(context).colorScheme.secondary),
-                              CustomTextWidget(text: trade['Date']!, color: Theme.of(context).textTheme.caption?.color),
-                            ],
-                          )),
-                        ]))
-                    .toList()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: _currentPage > 1 ? () => setState(() => _currentPage--) : null,
-                  disabledColor: Colors.grey, // Disable button visual cue (optional)
+                              ))
+                          .toList(),
+                    )
+                  ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward),
+              ),
+            ),
+            // SizedBox(
+            //   width: width,
+            //   child: DataTable(
+
+            //       // columnSpacing: double.maxFinite,
+            //       // dataRowHeight: height * 0.08,
+            //       columns: const [
+            //         DataColumn(label: CustomTextWidget(text: "Symbol")),
+            //         DataColumn(label: CustomTextWidget(text: "Price")),
+            //         DataColumn(label: CustomTextWidget(text: "Type")),
+            //         DataColumn(label: CustomTextWidget(text: "Action")),
+            //         DataColumn(label: CustomTextWidget(text: "Quantity")),
+            //         DataColumn(label: CustomTextWidget(text: "Date")),
+            //       ],
+            //       rows: paginatedData
+            //           .map((trade) => DataRow(cells: [
+            //                 DataCell(
+            //                   CustomTextWidget(text: trade['Symbol']!, color: Theme.of(context).colorScheme.primary),
+            //                 ),
+            //                 DataCell(
+            //                   CustomTextWidget(text: trade['Price']!, color: Theme.of(context).colorScheme.secondary),
+            //                 ),
+            //                 DataCell(
+            //                   CustomTextWidget(text: trade['Type']!, color: Theme.of(context).colorScheme.secondary),
+            //                 ),
+            //                 DataCell(FittedBox(
+            //                   fit: BoxFit.contain,
+            //                   child: InfoBorderWidget(
+            //                     label: trade['Action']!,
+            //                   ),
+            //                 )),
+            //                 DataCell(CustomTextWidget(
+            //                     text: trade['Quantity']!, color: Theme.of(context).colorScheme.secondary)),
+            //                 DataCell(
+            //                     CustomTextWidget(text: trade['Date']!, color: Theme.of(context).colorScheme.secondary)),
+            //               ]))
+            //           .toList()),
+            // ),
+            Row(
+              children: [
+                CustomTextWidget(
+                    text:
+                        "${(_currentPage - 1) * _pageSize + 1} - ${_currentPage * _pageSize > data.length ? data.length : _currentPage * _pageSize} of ${data.length}"),
+                const Spacer(),
+                IconButtonBorder(
+                  icon: Icons.arrow_back_ios,
+                  onPressed: _currentPage > 1 ? () => setState(() => _currentPage--) : null,
+                ),
+                IconButtonBorder(
+                  icon: Icons.arrow_forward_ios,
                   onPressed:
                       _currentPage < (data.length / _pageSize).ceil() ? () => setState(() => _currentPage++) : null,
-                  disabledColor: Colors.grey, // Disable button visual cue (optional)
                 ),
               ],
             ),

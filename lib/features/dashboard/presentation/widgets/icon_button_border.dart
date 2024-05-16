@@ -18,7 +18,7 @@ class IconButtonBorder extends StatelessWidget {
             padding: const EdgeInsets.all(2.0),
             child: Icon(
               icon,
-              size: size ?? width * 0.04,
+              // size: size ?? width * 0.04,
             ),
           )),
       onPressed: onPressed,

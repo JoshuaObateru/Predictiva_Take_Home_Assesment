@@ -13,7 +13,9 @@ class CustomTextWidget extends StatelessWidget {
     return Text(
       text,
       style: textStyle ??
-          TextStyle(color: color ?? Theme.of(context).colorScheme.secondary, fontSize: fontsize ?? width * 0.03),
+          TextStyle(
+              color: color ?? Theme.of(context).colorScheme.secondary,
+              fontSize: fontsize ?? (width < 600 ? width * 0.03 : width * 0.015)),
       textAlign: TextAlign.start,
     );
   }
