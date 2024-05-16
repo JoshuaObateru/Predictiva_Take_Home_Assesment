@@ -10,5 +10,8 @@ ThemeData lightMode = ThemeData(
   tertiary: Color.fromRGBO(0, 202, 69, 1),
   error: Color.fromRGBO(228, 12, 12, 1),
 )).copyWith(
-  indicatorColor: const Color.fromRGBO(231, 181, 0, 1),
-);
+    indicatorColor: const Color.fromRGBO(231, 181, 0, 1),
+    textTheme: const TextTheme(
+        caption: TextStyle(
+      color: Color.fromRGBO(50, 50, 62, 1),
+    )));
