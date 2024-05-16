@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:predictiva_take_home_assesment/core/presentation/widgets/custom_text_widget.dart';
+import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/trade_entity.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/info_border_widget.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/trades_table_widget.dart';
 
 class DashboardMobile extends StatelessWidget {
   final double width;
   final double height;
-  const DashboardMobile({super.key, required this.width, required this.height});
+  final List<TradeEntity> orders;
+  const DashboardMobile({super.key, required this.width, required this.height, required this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +123,9 @@ class DashboardMobile extends StatelessWidget {
             SizedBox(
               height: height * 0.03,
             ),
-            TradesTableWidget()
+            TradesTableWidget(
+              orders: orders,
+            )
           ],
         ),
       ),

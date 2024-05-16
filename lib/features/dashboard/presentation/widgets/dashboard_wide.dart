@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:predictiva_take_home_assesment/core/presentation/widgets/custom_text_widget.dart';
+import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/trade_entity.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/info_border_widget.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/wide_trades_table_widget.dart';
 
 class DashboardWide extends StatelessWidget {
   final double width;
   final double height;
-  const DashboardWide({super.key, required this.width, required this.height});
+  final List<TradeEntity> orders;
+  const DashboardWide({super.key, required this.width, required this.height, required this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,7 @@ class DashboardWide extends StatelessWidget {
                                   children: [
                                     CustomTextWidget(
                                         text: "\$86.03",
-                                        fontsize: width * 0.025,
+                                        fontsize: width * 0.02,
                                         color: Theme.of(context).colorScheme.primary),
                                     const Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -122,7 +124,7 @@ class DashboardWide extends StatelessWidget {
                                   height: height * 0.01,
                                 ),
                                 CustomTextWidget(
-                                    text: "12", fontsize: width * 0.025, color: Theme.of(context).colorScheme.primary),
+                                    text: "12", fontsize: width * 0.02, color: Theme.of(context).colorScheme.primary),
                               ],
                             ),
                           ),
@@ -155,7 +157,9 @@ class DashboardWide extends StatelessWidget {
             SizedBox(
               height: height * 0.03,
             ),
-            WideTradesTableWidget()
+            WideTradesTableWidget(
+              orders: orders,
+            )
           ],
         ),
       ),
