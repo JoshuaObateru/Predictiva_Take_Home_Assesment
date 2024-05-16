@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:predictiva_take_home_assesment/core/presentation/widgets/custom_text_widget.dart';
+import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/portfolio_entity.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/trade_entity.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/info_border_widget.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/wide_trades_table_widget.dart';
@@ -8,7 +9,8 @@ class DashboardWide extends StatelessWidget {
   final double width;
   final double height;
   final List<TradeEntity> orders;
-  const DashboardWide({super.key, required this.width, required this.height, required this.orders});
+  final PortfolioEntity? portfolio;
+  const DashboardWide({super.key, required this.width, required this.height, required this.orders, this.portfolio});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class DashboardWide extends StatelessWidget {
                                   height: height * 0.01,
                                 ),
                                 CustomTextWidget(
-                                    text: "\$616.81",
+                                    text: "\$${portfolio?.balance}",
                                     fontsize: width * 0.02,
                                     color: Theme.of(context).colorScheme.primary),
                               ],
@@ -90,15 +92,19 @@ class DashboardWide extends StatelessWidget {
                                 Row(
                                   children: [
                                     CustomTextWidget(
-                                        text: "\$86.03",
+                                        text: "\$${portfolio?.profit}",
                                         fontsize: width * 0.02,
                                         color: Theme.of(context).colorScheme.primary),
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                       child: InfoBorderWidget(
-                                        label: "31%",
+                                        label: "${portfolio?.profit}",
                                         isTrending: true,
-                                        increase: true,
+                                        increase: portfolio?.profit != null
+                                            ? portfolio!.profit > 1
+                                                ? true
+                                                : false
+                                            : false,
                                       ),
                                     )
                                   ],
@@ -124,7 +130,9 @@ class DashboardWide extends StatelessWidget {
                                   height: height * 0.01,
                                 ),
                                 CustomTextWidget(
-                                    text: "12", fontsize: width * 0.02, color: Theme.of(context).colorScheme.primary),
+                                    text: "${portfolio?.assets}",
+                                    fontsize: width * 0.02,
+                                    color: Theme.of(context).colorScheme.primary),
                               ],
                             ),
                           ),

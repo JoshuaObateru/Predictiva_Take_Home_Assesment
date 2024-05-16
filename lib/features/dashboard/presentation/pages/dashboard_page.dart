@@ -21,50 +21,55 @@ class _DashboardPageState extends State<DashboardPage> {
     return FutureProvider(
         create: (_) => tradeUseCase.fetchOpenTrades(),
         initialData: [],
-        child: Consumer<TradeProvider>(
-          builder: (context, userProvider, _) {
-            if (userProvider.isLoading == true) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (userProvider.errorMessage.isNotEmpty) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  // Return the content of the popup dialog
-                  return AlertDialog(
-                    content: CustomTextWidget(
-                      text: userProvider.errorMessage,
-                      color: Theme.of(context).colorScheme.error,
-                    ),
+        child: FutureProvider(
+            create: (_) => tradeUseCase.fetchOpenPortfolio(),
+            initialData: null,
+            child: Consumer<TradeProvider>(
+              builder: (context, tradeProvider, _) {
+                if (tradeProvider.isLoading == true) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              );
-            }
-            return Scaffold(
-                backgroundColor: Theme.of(context).colorScheme.background,
-                appBar: CustomAppBar(
-                  child: AppBar(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                ),
-                body: LayoutBuilder(builder: (context, constraints) {
-                  if (constraints.maxWidth < 600) {
-                    return DashboardMobile(
-                      width: constraints.maxWidth,
-                      height: constraints.maxHeight,
-                      orders: userProvider.openTrades,
-                    );
-                  } else {
-                    return DashboardWide(
-                      width: constraints.maxWidth,
-                      height: constraints.maxHeight,
-                      orders: userProvider.openTrades,
-                    );
-                  }
-                }));
-          },
-        ));
+                }
+                if (tradeProvider.errorMessage.isNotEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      // Return the content of the popup dialog
+                      return AlertDialog(
+                        content: CustomTextWidget(
+                          text: tradeProvider.errorMessage,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      );
+                    },
+                  );
+                }
+                return Scaffold(
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                    appBar: CustomAppBar(
+                      child: AppBar(
+                        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                    ),
+                    body: LayoutBuilder(builder: (context, constraints) {
+                      if (constraints.maxWidth < 600) {
+                        return DashboardMobile(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          orders: tradeProvider.openTrades,
+                          portfolio: tradeProvider.portfolio,
+                        );
+                      } else {
+                        return DashboardWide(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          orders: tradeProvider.openTrades,
+                          portfolio: tradeProvider.portfolio,
+                        );
+                      }
+                    }));
+              },
+            )));
   }
 }
