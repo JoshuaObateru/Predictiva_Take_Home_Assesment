@@ -78,9 +78,13 @@ class DashboardMobile extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: InfoBorderWidget(
-                                  label: "${portfolio?.profit}",
+                                  label: "${portfolio?.profitPercentage}",
                                   isTrending: true,
-                                  increase: portfolio!.profit > 1 ? true : false,
+                                  increase: portfolio?.profit != null
+                                      ? portfolio!.profit > 1
+                                          ? true
+                                          : false
+                                      : false,
                                 ),
                               )
                             ],

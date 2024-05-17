@@ -40,4 +40,9 @@ class TradeProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> call() async {
+    fetchOpenPortfolio();
+    fetchOpenTrades();
+  }
 }

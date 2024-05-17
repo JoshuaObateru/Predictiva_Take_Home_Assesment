@@ -37,7 +37,9 @@ class TradeRepositoryImpl implements TradeRepository {
       // print(response);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final portfolio = PortfolioModel.fromJson(data['data']['portfolio']);
+        // print(data);
+        final portfolio = PortfolioModel.fromJson(data);
+        // print(portfolio);
         return portfolio;
       } else {
         throw Exception("Something went wrong");

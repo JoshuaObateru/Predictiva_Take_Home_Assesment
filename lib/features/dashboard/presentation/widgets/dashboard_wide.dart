@@ -92,13 +92,13 @@ class DashboardWide extends StatelessWidget {
                                 Row(
                                   children: [
                                     CustomTextWidget(
-                                        text: "\$${portfolio?.profit}",
+                                        text: "${portfolio?.profit}",
                                         fontsize: width * 0.02,
                                         color: Theme.of(context).colorScheme.primary),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                       child: InfoBorderWidget(
-                                        label: "${portfolio?.profit}",
+                                        label: "${portfolio?.profitPercentage}%",
                                         isTrending: true,
                                         increase: portfolio?.profit != null
                                             ? portfolio!.profit > 1
