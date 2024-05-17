@@ -3,6 +3,7 @@ import 'package:predictiva_take_home_assesment/features/dashboard/domain/entitie
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/filter_widget.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/icon_button_border.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/info_border_widget.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/presentation/widgets/custom_text_widget.dart';
 
@@ -15,6 +16,7 @@ class WideTradesTableWidget extends StatefulWidget {
 }
 
 class _WideTradesTableWidgetState extends State<WideTradesTableWidget> {
+  final formatter = NumberFormat('#,###.####');
   int _currentPage = 1;
   static const int _pageSize = 5;
   @override
@@ -122,7 +124,8 @@ class _WideTradesTableWidgetState extends State<WideTradesTableWidget> {
                                         ),
                                         Expanded(
                                           child: CustomTextWidget(
-                                              text: "${trade.price}", color: Theme.of(context).colorScheme.secondary),
+                                              text: formatter.format(trade.price),
+                                              color: Theme.of(context).colorScheme.secondary),
                                         ),
                                         Expanded(
                                           child: CustomTextWidget(
@@ -139,12 +142,13 @@ class _WideTradesTableWidgetState extends State<WideTradesTableWidget> {
                                         ),
                                         Expanded(
                                           child: CustomTextWidget(
-                                              text: "${trade.quantity}",
+                                              text: formatter.format(trade.quantity),
                                               color: Theme.of(context).colorScheme.secondary),
                                         ),
                                         Expanded(
                                           child: CustomTextWidget(
-                                              text: "${trade.creationTime}",
+                                              text: DateFormat('d MMM, y')
+                                                  .format(DateTime.fromMicrosecondsSinceEpoch(trade.creationTime)),
                                               color: Theme.of(context).colorScheme.secondary),
                                         )
                                       ],

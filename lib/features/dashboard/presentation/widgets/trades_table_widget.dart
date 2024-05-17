@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/trade_entity.dart';
+import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/filter_widget.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/icon_button_border.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/presentation/widgets/info_border_widget.dart';
 
 import '../../../../core/presentation/widgets/custom_text_widget.dart';
+import 'package:intl/intl.dart';
 
 class TradesTableWidget extends StatefulWidget {
   final List<TradeEntity> orders;
@@ -14,6 +16,7 @@ class TradesTableWidget extends StatefulWidget {
 }
 
 class _TradesTableWidgetState extends State<TradesTableWidget> {
+  final formatter = NumberFormat('#,###.####');
   int _currentPage = 1;
   static const int _pageSize = 5;
   @override
@@ -44,7 +47,12 @@ class _TradesTableWidgetState extends State<TradesTableWidget> {
                         builder: (BuildContext context) {
                           // Return the content of the popup dialog
                           return AlertDialog(
-                            content: Text('This is the content of the popup dialog'),
+                            content: FilterWidget(
+                              onApply: (text, value, startDate, endDate) {
+                                // Handle filter application logic here
+                                print('Text: $text, Value: $value, Start Date: $startDate, End Date: $endDate');
+                              },
+                            ),
                           );
                         },
                       );
@@ -95,14 +103,16 @@ class _TradesTableWidgetState extends State<TradesTableWidget> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CustomTextWidget(
-                                      text: "${trade.price}",
+                                      text: formatter.format(trade.price),
                                       fontsize: width * 0.04,
                                       color: Theme.of(context).colorScheme.secondary),
                                   SizedBox(
                                     height: height * 0.01,
                                   ),
                                   CustomTextWidget(
-                                      text: "${trade.creationTime}", color: Theme.of(context).textTheme.caption?.color),
+                                      text: DateFormat('d MMM, y')
+                                          .format(DateTime.fromMicrosecondsSinceEpoch(trade.creationTime)),
+                                      color: Theme.of(context).textTheme.caption?.color),
                                 ],
                               )
                             ],

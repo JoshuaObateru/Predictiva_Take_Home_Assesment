@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:predictiva_take_home_assesment/core/presentation/widgets/custom_text_widget.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/portfolio_entity.dart';
 import 'package:predictiva_take_home_assesment/features/dashboard/domain/entities/trade_entity.dart';
@@ -10,7 +11,9 @@ class DashboardMobile extends StatelessWidget {
   final double height;
   final List<TradeEntity> orders;
   final PortfolioEntity? portfolio;
-  const DashboardMobile({super.key, required this.width, required this.height, required this.orders, this.portfolio});
+  DashboardMobile({super.key, required this.width, required this.height, required this.orders, this.portfolio});
+
+  final formatter = NumberFormat('#,###.##');
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class DashboardMobile extends StatelessWidget {
                             height: height * 0.01,
                           ),
                           CustomTextWidget(
-                              text: "\$${portfolio?.balance}",
+                              text: "\$${formatter.format(portfolio?.balance)}",
                               fontsize: width * 0.05,
                               color: Theme.of(context).colorScheme.primary),
                           Divider(
@@ -72,13 +75,13 @@ class DashboardMobile extends StatelessWidget {
                           Row(
                             children: [
                               CustomTextWidget(
-                                  text: "\$${portfolio?.profit}",
+                                  text: "\$${formatter.format(portfolio?.profit)}",
                                   fontsize: width * 0.05,
                                   color: Theme.of(context).colorScheme.primary),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: InfoBorderWidget(
-                                  label: "${portfolio?.profitPercentage}",
+                                  label: formatter.format(portfolio?.profitPercentage),
                                   isTrending: true,
                                   increase: portfolio?.profit != null
                                       ? portfolio!.profit > 1
@@ -100,7 +103,7 @@ class DashboardMobile extends StatelessWidget {
                             height: height * 0.01,
                           ),
                           CustomTextWidget(
-                              text: "${portfolio?.assets}",
+                              text: formatter.format(portfolio?.assets),
                               fontsize: width * 0.05,
                               color: Theme.of(context).colorScheme.primary),
                         ],
